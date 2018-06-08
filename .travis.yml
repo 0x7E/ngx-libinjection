@@ -1,0 +1,36 @@
+sudo: required
+dist: trusty
+
+os: linux
+
+language: c
+
+compiler:
+    - gcc
+    - clang
+
+env:
+    matric:
+        - NGINX_VERSION=1.15.0
+        - NGINX_VERSION=1.14.0
+
+before_install:
+    - sudo apt-get install -qq -y cpanminus
+    - sudo cpanm -v --notest Test::Nginx > build.log 2>&1 || (cat build.log && exit 1)
+
+install:
+    - wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz && tar -xzf nginx-${NGINX_VERSION}.tar.gz
+    - git clone https://github.com/openresty/echo-nginx-module.git
+    - git clone https://github.com/client9/libinjection.git
+
+script:
+    - cd libinjection/
+    - make all
+    - cd ..
+    - cd nginx-${NGINX_VERSION}/
+    - ./configure --with-debug --prefix=$HOME/nginx --add-module=../echo-nginx-module --add-module=..
+    - make -j2 > build.log 2>&1 || (cat build.log && exit 1)
+    - export PATH=$PATH:`pwd`/objs
+    - cd ..
+    - prove -r t/
+    

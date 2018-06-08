@@ -10,7 +10,7 @@ compiler:
     - clang
 
 env:
-    matric:
+    matrix:
         - NGINX_VERSION=1.15.0
         - NGINX_VERSION=1.14.0
 

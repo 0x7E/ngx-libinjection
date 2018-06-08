@@ -31,7 +31,7 @@ script:
     - export LIBINJECTION_PATH=`pwd`/src
     - cd ..
     - cd nginx-${NGINX_VERSION}/
-    - ./configure --with-debug --prefix=$HOME/nginx --add-module=../echo-nginx-module --add-module=..
+    - ./configure --with-debug --add-module=../echo-nginx-module --add-module=..
     - make -j2 > build.log 2>&1 || (cat build.log && exit 1)
     - export PATH=$PATH:`pwd`/objs
     - cd ..

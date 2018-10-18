@@ -73,7 +73,7 @@ Enables processing of request body params when the request content type is `appl
 
 ## libinjection_patterns
 
-**Syntax**: *libinjection_keys foo*
+**Syntax**: *libinjection_patterns foo*
 
 **Default**: *-*
 
